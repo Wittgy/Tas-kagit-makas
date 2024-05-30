@@ -105,7 +105,7 @@
           }
           
           .is-toggled {
-            background-color: black;
+            background-color: rgb(25, 25, 25);
         }
     </style>
 </head>
@@ -211,10 +211,10 @@
         if (currentClass) {
             body.classList.remove('is-toggled');
             toggleButton.textContent = 'On';
-            body.style.backgroundColor = 'black'; // Siyah arka plan
-            body.style.color = 'white'; // Beyaz metin
+            body.style.backgroundColor = 'rgb(25, 25, 25)'; // Siyah arka plan
+            body.style.color = 'wheat'; // Beyaz metin
             toggleButton.style.backgroundColor = 'white'; // Buton rengi beyaz
-            toggleButton.style.color = 'black'; // Buton metin rengi siyah
+            toggleButton.style.color = 'rgb(25, 25, 25)'; // Buton metin rengi siyah
         } else {
             body.classList.add('is-toggled');
             toggleButton.textContent = 'Off';
