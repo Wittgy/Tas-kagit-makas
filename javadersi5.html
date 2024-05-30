@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Çalışması</title>
+    <style>
+        body {
+            background-color: rgb(25, 25, 25);
+            color: wheat;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .move-icon {
+            height: 50px;
+        }
+
+        .move-button {
+            background-color: transparent;
+            border: 3px solid white;
+            height: 120px;
+            width: 120px;
+            border-radius: 60px;
+            margin-right: 10px;
+            cursor: pointer;
+            
+        }
+        .move-button:hover {
+            filter: brightness(1.2);
+            transform: scale(1.1);
+            transform: translate(5px);
+            border-color: orange;
+        }
+
+        .move-button:active {
+            transform: scale(0.9);
+            filter: brightness(0.8);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Gölgelendirme efekti */
+        }
+        .result {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 50px;
+
+        }
+
+        .sifirla{
+            font-size: 20px;
+            background-color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 40px;
+        }
+        .sifirla:hover {
+            background-color: darkgray;
+        }
+
+        .sifirla:active {
+            transform: scale(0.9);
+            filter: brightness(0.8);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            display: flex;
+            justify-content: center; /* Yatay ortalama */
+            align-items: center; /* Dikey ortalama */
+            height: 100vh; /* Sayfanın tamamını kapla */
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column; /* İçerikleri dikey olarak hizala */
+            align-items: center; /* Dikey olarak ortala */
+            text-align: center; /* Yatayda ortala */
+            height: 100vh; /* Sayfanın tamamını kapla */
+            justify-content: center; /* Yatayda ortala */
+        }
+        
+        .buton-container {
+            display: flex; /* Butonları yan yana hizala */
+        }
+    </style>
+</head>
+<body>
+<div class="container">    
+    <p class="title">Taş Kağıt Makas</p>
+        <div class="buton-container">
+            <button onclick="playGame('Taş')" class="move-button"><img src="rock-35522_640.png" class="move-icon"></button>
+            <button onclick="playGame('Kağıt')" class="move-button"><img src="scroll-34696_640.png" class="move-icon"></button>
+            <button onclick="playGame('Makas')" class="move-button"><img src="scissors-806238_640.png" class="move-icon"></button>
+        </div>
+        <p class="js-result result"></p>
+        <p class="js-score"></p>
+        <button onclick="
+            score.kazanc = 0;
+            score.kayip = 0;
+            score.berabere = 0;
+            alert('Skorlar Sıfırlandı!')
+            updateText();
+        " class="sifirla">Sıfırla</button>
+    
+</div>
+    <script>
+        let score = JSON.parse(localStorage.getItem('score')) || { kazanc: 0, kayip: 0, beraberlik: 0 };
+
+        updateText();
+
+        function playGame(playerMove) {
+            const computerMove = pickcomputerMove();
+            let result = '';
+            
+            if (playerMove === 'Taş') {
+                if (computerMove === 'Taş') {
+                    result = 'Bilgisayarın seçimi: Taş. <br><br>Beraberlik! :/';
+                    score.berabere++;
+                } else if (computerMove === 'Kağıt') {
+                    result = 'Bilgisayarın seçimi: Kağıt. <br><br>Kaybettin! :(';
+                    score.kayip++;
+                } else if (computerMove === 'Makas') {
+                    result = 'Bilgisayarın seçimi: Makas. <br><br>Tebrikler, kazandın! :D';
+                    score.kazanc++;
+                }
+            } else if (playerMove === 'Kağıt') {
+                if (computerMove === 'Taş') {
+                    result = 'Bilgisayarın seçimi: Taş. <br><br>Tebrikler, kazandın! :D';
+                    score.kazanc++;
+                } else if (computerMove === 'Kağıt') {
+                    result = 'Bilgisayarın seçimi: Kağıt. <br><br>Beraberlik :/';
+                    score.berabere++;
+                } else if (computerMove === 'Makas') {
+                    result = 'Bilgisayarın seçimi: Makas. <br><br>Maalesef kaybettin! :(';
+                    score.kayip++;
+                }
+            } else if (playerMove === 'Makas') {
+                if (computerMove === 'Taş') {
+                    result = 'Bilgisayarın seçimi: Taş. <br><br>Maalesef kaybettin! :(';
+                    score.kayip++;
+                } else if (computerMove === 'Kağıt') {
+                    result = 'Bilgisayarın seçimi: Kağıt. <br><br>Tebrikler, kazandın! :D';
+                    score.kazanc++;
+                } else if (computerMove === 'Makas') {
+                    result = 'Bilgisayarın seçimi: Makas. <br><br>Beraberlik :/';
+                    score.berabere++;
+                }
+            }
+
+            localStorage.setItem('score', JSON.stringify(score));
+
+            updateText();
+
+            document.querySelector('.js-result').innerHTML = result;
+            document.querySelector('.js-moves').innerHTML = `Seçimin: ${playerMove} - ${result}`;
+        }
+
+        function updateText() {
+            document.querySelector('.js-score').innerHTML = `Kazanç: ${score.kazanc}\nKayıp: ${score.kayip}\nBeraberlik: ${score.berabere}`;
+        }
+
+        function pickcomputerMove() {
+            const randomNumber = Math.random();
+            let computerMove = '';
+
+            if (randomNumber >= 0 && randomNumber < 1 / 3) {
+                computerMove = 'Taş';
+            } else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
+                computerMove = 'Kağıt';
+            } else if (randomNumber >= 2 / 3 && randomNumber < 1) {
+                computerMove = 'Makas';
+            }
+
+            return computerMove;
+        }
+    </script>
+</body>
+</html>
