@@ -104,6 +104,9 @@
             background-color: lightgray;
           }
           
+          .is-toggled {
+            background-color: black;
+        }
     </style>
 </head>
 <body>
@@ -210,11 +213,15 @@
             toggleButton.textContent = 'On';
             body.style.backgroundColor = 'black'; // Siyah arka plan
             body.style.color = 'white'; // Beyaz metin
+            toggleButton.style.backgroundColor = 'white'; // Buton rengi beyaz
+            toggleButton.style.color = 'black'; // Buton metin rengi siyah
         } else {
             body.classList.add('is-toggled');
             toggleButton.textContent = 'Off';
             body.style.backgroundColor = 'gray'; // Beyaz arka plan
             body.style.color = 'black'; // Siyah metin
+            toggleButton.style.backgroundColor = 'black'; // Buton rengi siyah
+            toggleButton.style.color = 'white'; // Buton metin rengi beyaz
         }
         });
 
