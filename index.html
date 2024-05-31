@@ -49,7 +49,19 @@
             margin-top: 50px;
 
         }
-
+        .button-row {
+            display: flex;
+            gap: 10px; /* Butonlar arasında boşluk */
+        }
+        
+        #playButton {
+            font-size: 20px;
+            background-color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 40px;
+        }
         .sifirla{
             font-size: 20px;
             background-color: white;
@@ -119,13 +131,16 @@
         </div>
         <p class="js-result result"></p>
         <p class="js-score"></p>
-        <button onclick="
-            score.kazanc = 0;
-            score.kayip = 0;
-            score.berabere = 0;
-            alert('Skorlar Sıfırlandı!')
-            updateText();
-        " class="sifirla">Sıfırla</button>
+        <div class="button-row">
+            <button onclick="
+                score.kazanc = 0;
+                score.kayip = 0;
+                score.berabere = 0;
+                alert('Skorlar Sıfırlandı!')
+                updateText();
+            " class="sifirla">Sıfırla</button>
+            <button id="playButton" onclick="togglePlay()">Oynat</button>
+        </div>
         <button id="toggleButton">On</button>
 
     
@@ -224,6 +239,30 @@
             toggleButton.style.color = 'white'; // Buton metin rengi beyaz
         }
         });
+
+        let timerId; // Zamanlayıcıyı tutacak değişken
+
+function togglePlay() {
+    const playButton = document.getElementById('playButton');
+    
+    if (timerId) {
+        // Zamanlayıcı çalışıyorsa, oyunu durdur
+        clearInterval(timerId);
+        timerId = null;
+        playButton.textContent = 'Oynat';
+    } else {
+        // Zamanlayıcı çalışmıyorsa, oyunu başlat
+        timerId = setInterval(playGameAutomatically, 1000); // 1 saniyede bir oyunu çalıştır
+        playButton.textContent = 'Durdur';
+    }
+}
+
+function playGameAutomatically() {
+    const moves = ['Taş', 'Kağıt', 'Makas'];
+    const randomMove = moves[Math.floor(Math.random() * moves.length)]; // Rastgele bir hareket seç
+    
+    playGame(randomMove); // Rastgele hareketi oynat
+}
 
     </script>
 </body>
