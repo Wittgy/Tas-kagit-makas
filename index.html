@@ -95,10 +95,12 @@
             height: 100vh; /* Sayfanın tamamını kapla */
             justify-content: center; /* Yatayda ortala */
         }
-        
-        .buton-container {
-            display: flex; /* Butonları yan yana hizala */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px; /* Küçük ekranlarda içeriği daha sıkı yap */
+            }
         }
+     
 
         #toggleButton {
             position: fixed;
